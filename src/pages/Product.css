@@ -1,0 +1,371 @@
+/* Product.css */
+.product-page {
+  padding-bottom: 5rem;
+}
+
+.loading-state {
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--color-text-muted);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.breadcrumb a:hover {
+  color: var(--color-primary);
+}
+
+.breadcrumb span {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.product-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-bottom: 5rem;
+}
+
+@media (min-width: 992px) {
+  .product-main {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 4rem;
+  }
+}
+
+.product-gallery {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .product-gallery {
+    flex-direction: row;
+    height: 700px;
+  }
+}
+
+.gallery-thumbnails {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .gallery-thumbnails {
+    flex-direction: column;
+    width: 80px;
+    flex-shrink: 0;
+    overflow-y: auto;
+    padding-bottom: 0;
+  }
+}
+
+.thumbnail-btn {
+  width: 80px;
+  height: 100px;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0.6;
+}
+
+.thumbnail-btn.active {
+  opacity: 1;
+  border-color: var(--color-primary);
+}
+
+.thumbnail-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-main {
+  flex-grow: 1;
+  background-color: var(--color-secondary);
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Product Details Sidebar */
+.product-details {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+
+.product-brand {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.product-title {
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.product-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.product-price {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.stars {
+  display: flex;
+  gap: 2px;
+}
+
+.stars .filled {
+  color: var(--color-accent);
+}
+
+.stars .empty {
+  color: var(--color-border);
+}
+
+.review-count {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.product-description {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
+
+.product-options {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.option-group h3 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.option-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.option-header span {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+.size-guide {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-decoration: underline;
+}
+
+.color-options {
+  display: flex;
+  gap: 1rem;
+}
+
+.color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
+}
+
+.color-swatch[title="White"],
+.color-swatch[title="Off-White"] {
+  background-color: #fcfcfc !important;
+}
+
+.color-swatch[title="Black"],
+.color-swatch[title="Black Wash"] {
+  background-color: #1a1a1a !important;
+}
+
+.color-swatch[title="Beige"], 
+.color-swatch[title="Tan"], 
+.color-swatch[title="Camel"],
+.color-swatch[title="Sand"] {
+  background-color: #d4a373 !important;
+}
+
+.color-swatch[title="Navy"], 
+.color-swatch[title="Blue Wash"] {
+  background-color: #264653 !important;
+}
+
+.color-swatch[title="Grey"] {
+  background-color: #6c757d !important;
+}
+
+.color-swatch[title="Olive"] {
+  background-color: #556b2f !important;
+}
+
+.color-swatch.selected {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+.size-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.size-selector {
+  min-width: 60px;
+  height: 48px;
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.size-selector:hover {
+  border-color: var(--color-text);
+}
+
+.size-selector.selected {
+  background-color: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary);
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  width: 140px;
+  height: 48px;
+  border: 1px solid var(--color-border);
+}
+
+.quantity-selector button {
+  width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.quantity-selector button:hover {
+  background-color: var(--color-secondary);
+}
+
+.quantity-selector input {
+  flex-grow: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+  text-align: center;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  outline: none;
+  background: transparent;
+}
+
+.add-to-cart-main {
+  width: 100%;
+  padding: 1.25rem;
+  font-size: 1.05rem;
+}
+
+.product-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  background-color: var(--color-secondary);
+  border-radius: var(--border-radius);
+}
+
+.perk {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Toast Popup */
+.toast-popup {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-primary);
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  z-index: 1000;
+  font-weight: 500;
+}
+
+.toast-link {
+  color: white;
+  text-decoration: underline;
+  margin-left: 1rem;
+  font-weight: 600;
+}
+.toast-link:hover {
+  color: var(--color-secondary);
+}

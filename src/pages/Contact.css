@@ -1,0 +1,30 @@
+/* Contact Page Styles */
+.contact-page {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 4rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.contact-form-container input:focus,
+.contact-form-container textarea:focus {
+  outline: none;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(30,58,138,0.1);
+}
+
+.contact-form-container button:hover:not(:disabled) {
+  background-color: #152c6b !important; /* Slightly darker shade of primary color */
+}
