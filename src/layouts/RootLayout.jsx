@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { ShoppingBag, Search, Menu, User, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './RootLayout.css';
@@ -7,9 +7,21 @@ import './RootLayout.css';
 const RootLayout = () => {
   const { cartItemCount } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [headerSearchQuery, setHeaderSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
   const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (headerSearchQuery.trim()) {
+      navigate(`/shop?q=${encodeURIComponent(headerSearchQuery.trim())}`);
+      setIsSearchOpen(false);
+      setHeaderSearchQuery('');
+    }
+  };
 
   return (
     <div className="app-wrapper">
@@ -37,7 +49,22 @@ const RootLayout = () => {
           </div>
 
           <div className="nav-right">
-            <button className="icon-btn" aria-label="Search">
+            <div className={`header-search-container ${isSearchOpen ? 'open' : ''}`}>
+              <form onSubmit={handleSearchSubmit}>
+                <input 
+                  type="text" 
+                  className="header-search-input" 
+                  placeholder="Search products..." 
+                  value={headerSearchQuery}
+                  onChange={(e) => setHeaderSearchQuery(e.target.value)}
+                  onBlur={() => {
+                    if (!headerSearchQuery) setIsSearchOpen(false);
+                  }}
+                  autoFocus={isSearchOpen}
+                />
+              </form>
+            </div>
+            <button className="icon-btn" aria-label="Search" onClick={() => setIsSearchOpen(!isSearchOpen)}>
               <Search size={20} />
             </button>
             <Link to="/dashboard" className="icon-btn" aria-label="Account">

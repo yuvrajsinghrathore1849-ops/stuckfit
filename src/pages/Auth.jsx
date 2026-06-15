@@ -1,6 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
+
+// Decode Google JWT Token natives
+const parseJwt = (token) => {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      window
+        .atob(base64)
+        .split('')
+        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    console.error('Failed to parse JWT token:', error);
+    return null;
+  }
+};
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -16,11 +35,94 @@ const Auth = () => {
     setFormData({...formData, [e.target.name]: e.target.value});
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Mock authentication
+    const name = formData.name || formData.email.split('@')[0];
+    const email = formData.email;
+    
+    // Sync user details to backend API database
+    try {
+      await fetch('http://localhost:5000/api/users/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email })
+      });
+    } catch (err) {
+      console.error('Failed to sync user details to API:', err);
+    }
+
+    localStorage.setItem('userAuth', JSON.stringify({
+      email,
+      name,
+      picture: null
+    }));
     navigate('/dashboard');
   };
+
+  const handleGoogleLoginResponse = async (response) => {
+    const responsePayload = parseJwt(response.credential);
+    if (responsePayload) {
+      const name = responsePayload.name;
+      const email = responsePayload.email;
+
+      // Sync user details to backend API database
+      try {
+        await fetch('http://localhost:5000/api/users/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email })
+        });
+      } catch (err) {
+        console.error('Failed to sync Google user details to API:', err);
+      }
+
+      // Store user details in session (mock auth storage)
+      localStorage.setItem('userAuth', JSON.stringify({
+        email: email,
+        name: name,
+        picture: responsePayload.picture
+      }));
+
+      // Redirect to user dashboard
+      navigate('/dashboard');
+    }
+  };
+
+  useEffect(() => {
+    /* global google */
+    const initializeGoogleSignIn = () => {
+      if (window.google) {
+        window.google.accounts.id.initialize({
+          client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+          callback: handleGoogleLoginResponse
+        });
+        
+        window.google.accounts.id.renderButton(
+          document.getElementById("google-signin-btn"),
+          { 
+            theme: "outline", 
+            size: "large", 
+            width: "100%",
+            text: "continue_with",
+            shape: "rectangular"
+          }
+        );
+      }
+    };
+
+    // Initialize once script is loaded
+    if (window.google) {
+      initializeGoogleSignIn();
+    } else {
+      const interval = setInterval(() => {
+        if (window.google) {
+          initializeGoogleSignIn();
+          clearInterval(interval);
+        }
+      }, 300);
+      return () => clearInterval(interval);
+    }
+  }, [isLogin]);
 
   return (
     <div className="auth-page container">
@@ -78,6 +180,12 @@ const Auth = () => {
             {isLogin ? 'Sign In' : 'Create Account'}
           </button>
         </form>
+
+        <div className="divider">
+          <span>or</span>
+        </div>
+
+        <div id="google-signin-btn" className="google-btn-container"></div>
 
         <div className="auth-toggle">
           <p>
