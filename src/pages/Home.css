@@ -434,3 +434,44 @@ section {
     transform: translateY(0);
   }
 }
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .hero {
+    height: 70vh;
+    min-height: 450px;
+  }
+  
+  .hero-content {
+    padding: 0 1.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.75rem;
+  }
+  
+  section {
+    padding: 3rem 0;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.75rem;
+  }
+  
+  .category-card {
+    height: 350px;
+  }
+}
