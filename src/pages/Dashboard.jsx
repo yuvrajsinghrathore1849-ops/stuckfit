@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { User, Package, Heart, LogOut } from 'lucide-react';
 import './Dashboard.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('orders');
   const navigate = useNavigate();
@@ -43,7 +45,7 @@ const Dashboard = () => {
 
     // Sync user details to backend API database
     try {
-      await fetch('http://localhost:5000/api/users/sync', {
+      await fetch(`${API_URL}/api/users/sync`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: editName, email: editEmail })

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 // Decode Google JWT Token natives
 const parseJwt = (token) => {
   try {
@@ -42,7 +44,7 @@ const Auth = () => {
     
     // Sync user details to backend API database
     try {
-      await fetch('http://localhost:5000/api/users/sync', {
+      await fetch(`${API_URL}/api/users/sync`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email })
@@ -67,7 +69,7 @@ const Auth = () => {
 
       // Sync user details to backend API database
       try {
-        await fetch('http://localhost:5000/api/users/sync', {
+        await fetch(`${API_URL}/api/users/sync`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email })

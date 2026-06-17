@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Contact.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -26,8 +28,7 @@ const Contact = () => {
     setStatus({ type: '', message: '' });
     
     try {
-      // Point this to the new Stuckfit API backend
-      await axios.post('http://localhost:5000/api/messages', formData);
+      await axios.post(`${API_URL}/api/messages`, formData);
       setStatus({ type: 'success', message: 'Thank you for reaching out! Your message has been sent successfully. We will get back to you shortly.' });
       setFormData({ name: '', email: '', subject: '', message: '' });
     } catch (error) {

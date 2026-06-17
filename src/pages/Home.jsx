@@ -6,6 +6,8 @@ import { useCart } from '../context/CartContext';
 import Product360View from '../components/Product360View';
 import './Home.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,13 +23,13 @@ const Home = () => {
     const fetchData = async () => {
       try {
         // Fetch products
-        const response = await fetch('http://localhost:5000/api/products');
+        const response = await fetch(`${API_URL}/api/products`);
         const data = await response.json();
         setProducts(data);
         setIsLoading(false);
         
         // Fetch recent admin replies to show
-        const msgResponse = await fetch('http://localhost:5000/api/messages');
+        const msgResponse = await fetch(`${API_URL}/api/messages`);
         const msgs = await msgResponse.json();
         // Find the most recent message that has a reply
         const repliedMessages = msgs.filter(m => m.status === 'Replied' && m.reply);

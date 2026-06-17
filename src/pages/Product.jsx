@@ -6,6 +6,8 @@ import { Star, Truck, RefreshCcw, ShieldCheck, ChevronRight, CheckCircle } from 
 import Product360View from '../components/Product360View';
 import './Product.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 const Product = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -24,7 +26,7 @@ const Product = () => {
       try {
         setIsLoading(true);
         // Fetch the single product
-        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const res = await fetch(`${API_URL}/api/products/${id}`);
         if (!res.ok) {
           navigate('/shop');
           return;
@@ -37,7 +39,7 @@ const Product = () => {
         setActiveImage(foundProduct.images[0]);
         
         // Fetch all products to filter related ones
-        const allRes = await fetch('http://192.168.31.53:5000/api/products');
+        const allRes = await fetch(`${API_URL}/api/products`);
         const allProducts = await allRes.json();
         const related = allProducts
           .filter(p => p.category === foundProduct.category && p.id !== foundProduct.id)
